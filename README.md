@@ -38,10 +38,6 @@ Below are the repositories related to this project
 5. **Done**
    - Your deployment is complete!
 
-**Does not work?**
-
-> idk...
-
 ## Notes on overriding Spring Boot Properties
 
 When overriding Spring Boot properties using environment variables, use the following notation:
@@ -51,3 +47,13 @@ When overriding Spring Boot properties using environment variables, use the foll
 
 - **Spring Boot Notation**: `some.variable.with-dash`  
   **Environment Variable Notation**: `SOME_VARIABLE_WITHDASH`
+
+## P.S.
+
+**Exposing to localhost**
+
+> If you're using docker-driven minikube, do not forget about `minikube tunnel`
+
+**Something does not work?**
+
+> idk...
