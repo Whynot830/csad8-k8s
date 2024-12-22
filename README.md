@@ -25,7 +25,7 @@ Below are the repositories related to this project
 
 2. **Configure Environment Files**
 
-   - Prepare and configure your environment files for each service.
+   - Prepare and configure your environment files for each service (based on example .env files).
 
 3. **Run Deployment Script**
 
