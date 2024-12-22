@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: composer-service
+  labels:
+    app: composer-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: composer-service
+  template:
+    metadata:
+      labels:
+        app: composer-service
+    spec:
+      containers:
+        - name: composer-service
+          image: whynot7/composer-service:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: composer-service-config
+            - secretRef:
+                name: composer-service-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: composer-service
+spec:
+  selector:
+    app: composer-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: composer-service-ingress
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+# spec:
+#   rules:
+#     - host: composer-service.local
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: composer-service
+#                 port:
+#                   number: 80

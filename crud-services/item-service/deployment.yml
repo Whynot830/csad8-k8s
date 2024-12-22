@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: item-service
+  labels:
+    app: item-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: item-service
+  template:
+    metadata:
+      labels:
+        app: item-service
+    spec:
+      containers:
+        - name: item-service
+          image: whynot7/item-service:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: item-service-config
+            - secretRef:
+                name: item-service-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: item-service
+spec:
+  selector:
+    app: item-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
