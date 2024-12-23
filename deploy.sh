@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # Define the paths to the deploy scripts
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
+
 deploy_scripts=(
-  "./composer-service/deploy.sh"
-  "./crud-services/deploy.sh"
-  "./service-discovery/deploy.sh"
+  "${SCRIPT_DIR}/composer-service/deploy.sh"
+  "${SCRIPT_DIR}/crud-services/deploy.sh"
+  "${SCRIPT_DIR}/service-discovery/deploy.sh"
 )
 
 echo -e "###\nNOTE: Remember to reference all your ConfigMaps and Secrets in deployment YAMLs\n###\n"
@@ -12,13 +15,13 @@ echo -e "###\nNOTE: Remember to reference all your ConfigMaps and Secrets in dep
 
 for script in "${deploy_scripts[@]}"; do
   if [ -f "$script" ]; then
-    echo -e "---\nRunning $script...\n---\n"
+    echo -e "---\nRunning $script...\n---"
     bash "$script"
-    echo "$script completed successfully."
+    echo -e "$script completed successfully."
   else
     echo -e "---\nFATAL: $script not found!\n---"
     exit 1
   fi
 done
 
-echo -e "---\nDone: all scripts executed\n---"
+echo -e "---\nDone: all scripts have been executed\n---"
